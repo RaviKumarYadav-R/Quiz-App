@@ -28,7 +28,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px;
 }
 
 .quiz-container {
@@ -209,4 +208,14 @@ body {
   font-size: 14px;
   color: var(--text);
   opacity: 0.6;
+}
+
+@media (max-width: 480px){
+  .question-box h2{
+    font-size: 0.8rem;
+  }
+
+  .option{
+    font-size: 0.8rem;
+  }
 }
