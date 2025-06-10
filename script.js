@@ -98,8 +98,7 @@ function changeQuestion() {
 }
 
 newGameBtn.addEventListener("click", () => {
-  quizSetUpbox.style.display = "block";
-  result.style.display = "none";
+  location.reload()
 });
 
 startQuiz.addEventListener("click", () => {
