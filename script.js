@@ -1,5 +1,4 @@
 const questionEl = document.getElementById("question");
-const nextBtn = document.getElementById("nextBtn");
 const newGameBtn = document.getElementById("new-game");
 const optionsCont = document.querySelector(".options");
 const progress = document.getElementById("progress");
@@ -10,8 +9,14 @@ const difficulty = document.getElementById("difficulty");
 const startQuiz = document.getElementById("startQuiz");
 const showname = document.querySelector(".user-Name");
 const quizSetUpbox = document.querySelector(".quiz-setup");
+const result = document.querySelector(".result-box");
+const quizContainer = document.querySelector(".quiz-container");
 
 let ObjData;
+let score = 0;
+
+let rightAnswer = new Audio("./correct-6033.mp3");
+let wrongAnswer = new Audio("./wrong-buzzer-6268.mp3");
 
 let QIndex = 0;
 
@@ -60,8 +65,11 @@ function showQuestion() {
     button.addEventListener("click", () => {
       if (ans === questionArray.correct_answer) {
         button.classList.add("correct");
+        rightAnswer.play();
+        score++;
       } else {
         button.classList.add("wrong");
+        wrongAnswer.play();
       }
 
       Array.from(optionsCont.children).forEach((el) => {
@@ -69,29 +77,33 @@ function showQuestion() {
           el.classList.add("correct");
         el.disabled = true;
       });
-      nextBtn.style.display = "block";
+      changeQuestion();
     });
 
     optionsCont.append(button);
   });
 }
 
-nextBtn.addEventListener("click", () => {
-  nextBtn.style.display = "none";
+function changeQuestion() {
   QIndex++;
-  if (QIndex < ObjData.results.length) {
-    showQuestion();
-  } else {
-    newGameBtn.style.display = "block";
-  }
-});
+  setTimeout(() => {
+    if (QIndex < ObjData.results.length) {
+      showQuestion();
+    } else {
+      quizContainer.style.display = "none";
+      result.style.display = "block";
+      result.querySelector(".score").innerHTML = `${score} / 10`;
+    }
+  }, 1000);
+}
 
 newGameBtn.addEventListener("click", () => {
   quizSetUpbox.style.display = "block";
-  newGameBtn.style.display = "none";
+  result.style.display = "none";
 });
 
 startQuiz.addEventListener("click", () => {
+  quizContainer.style.display = "block";
   showname.innerText = `Hello ${
     userName.value.trim() === "" ? "Guest" : userName.value.trim()
   }`;
